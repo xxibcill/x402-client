@@ -15,16 +15,6 @@ Install the dependencies:
 npm install
 ```
 
-## Configuration
-
-Create a `.env` file in the root directory (optional, as defaults are provided in code):
-
-```env
-PRIVATE_KEY=your_private_key_here
-BASE_URL=your_api_base_url
-ENDPOINT_PATH=/your/endpoint/path
-```
-
 ## Running the Project
 
 Run the main script:
