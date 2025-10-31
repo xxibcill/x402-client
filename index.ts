@@ -8,9 +8,14 @@ const require = createRequire(import.meta.url);
 
 config();
 
-const privateKey = process.env.PRIVATE_KEY as Hex | undefined;
-const baseURL = process.env.RESOURCE_SERVER_URL;
-const endpointPath = process.env.ENDPOINT_PATH;
+//
+const privateKey = "0xea5aa9b3b309c2bb3086376f2e7d072f54ec1d11dcc78e18021e02d95e1cc430" as Hex;
+const baseURL = "https://membit-payment-proxy-1019910606111.asia-southeast1.run.app";
+
+// change endpoint path to test other membit APIs
+// const endpointPath = "/posts/search?q=BTC";
+const endpointPath = "/clusters/info?label=Bitcoin%20Yield%20Vaults";
+// const endpointPath = "/clusters/search?q=BTC";
 
 console.log(privateKey, baseURL, endpointPath);
 

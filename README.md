@@ -1,67 +1,34 @@
-# x402-Axios
+# x402-client
 
-An example client that demonstrates how to use the `x402-axios` package to interact with a paywall-protected API.
+A simple client demonstrating the x402 payment protocol with axios interceptors.
 
-## Requirements
+## Prerequisites
 
-- Node.js v20+
-- pnpm v10
-- A running x402 server (e.g., the [Express server example](../../servers/express))
-- A private key for signing transactions
-- USDC on Base Sepolia (get some from the [CDP Faucet](https://portal.cdp.coinbase.com/products/faucet))
+- Node.js (v18 or higher recommended)
+- npm or yarn
 
-## Getting started
+## Installation
 
-To start, install the dependencies from the `typescript` examples directory:
+Install the dependencies:
 
 ```bash
-cd examples/typescript
-pnpm install
+npm install
 ```
 
-Then, copy `.env-local` to `.env` and fill in the required values:
+## Configuration
+
+Create a `.env` file in the root directory (optional, as defaults are provided in code):
+
+```env
+PRIVATE_KEY=your_private_key_here
+BASE_URL=your_api_base_url
+ENDPOINT_PATH=/your/endpoint/path
+```
+
+## Running the Project
+
+Run the main script:
 
 ```bash
-cp .env-local .env
-```
-
-Finally, run the client:
-
-```bash
-pnpm dev
-```
-
-## Example
-
-The client will make a request to the protected endpoint. If the request requires payment, the client will automatically handle the payment flow:
-
-```typescript
-import axios from "axios";
-import { config } from "dotenv";
-import { withPaymentInterceptor, decodeXPaymentResponse, createSigner, type Hex } from "x402-axios";
-
-config();
-
-const privateKey = process.env.PRIVATE_KEY as Hex | string;
-const baseURL = process.env.RESOURCE_SERVER_URL as string; // e.g. https://example.com
-const endpointPath = process.env.ENDPOINT_PATH as string; // e.g. /weather
-
-async function main(): Promise<void> {
-  const signer = await createSigner("base-sepolia", privateKey);
-
-  const api = withPaymentInterceptor(
-    axios.create({
-      baseURL,
-    }),
-    signer,
-  );
-
-  const response = await api.get(endpointPath);
-  console.log(response.data);
-
-  const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
-  console.log(paymentResponse);
-}
-
-main();
+npm run dev
 ```
